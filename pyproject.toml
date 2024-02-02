@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mdit-py-toc"
-version = "1.0.0"
+version = "1.0.0.dev1"
 description = "A table of contents (TOC) plugin for markdown-it-py"
 authors = ["Björn Ricks <bjoern.ricks@greenbone.net>"]
 license = "MIT"
@@ -30,6 +30,7 @@ markdown-it-py = ">=3.0.0"
 autohooks-plugin-ruff = ">=24.1.0"
 autohooks-plugin-mypy = ">=23.10.0"
 autohooks-plugin-black = ">=23.10.0"
+pontos = ">=24.1.2"
 
 [tool.ruff]
 line-length = 80
@@ -53,6 +54,9 @@ pre-commit = [
     "autohooks.plugins.mypy",
     "autohooks.plugins.ruff",
 ]
+
+[tool.pontos.version]
+version-module-file = "mdit_py_toc/__version__.py"
 
 [build-system]
 requires = ["poetry-core"]
