@@ -1,7 +1,7 @@
 import functools
 import re
 from dataclasses import dataclass, field
-from typing import Iterable, Sequence
+from typing import Iterable, Sequence, Union
 
 from markdown_it import MarkdownIt
 from markdown_it.common.utils import escapeHtml
@@ -24,13 +24,13 @@ class Node:
         self.children = []
 
 
-def get_levels(level: str | int | Iterable[int]) -> list[int]:
+def get_levels(level: Union[str, int, Iterable[int]]) -> list[int]:
     if isinstance(level, str):
         return [int(level)]
     if isinstance(level, int):
         return [level]
     if isinstance(level, Iterable):
-        return list(level)
+        return list(level)  # type: ignore[arg-type]
 
     raise ValueError(f"Invalid value {level} of type {type(level)} for level")
 
@@ -38,7 +38,7 @@ def get_levels(level: str | int | Iterable[int]) -> list[int]:
 def toc_plugin(
     md: MarkdownIt,
     pattern: str = r"^(\[TOC\])",
-    level: int | Iterable[int] = (1, 2),
+    level: Union[int, Iterable[int]] = (1, 2),
     list_type: str = "ul",
 ) -> None:
     """
@@ -145,7 +145,7 @@ def render_toc_body(
     return content
 
 
-def headings_to_ast(ast: Node, tokens: Sequence[Token]):
+def headings_to_ast(ast: Node, tokens: Sequence[Token]) -> None:
     stack = [ast]
 
     for i, token in enumerate(tokens):
@@ -175,7 +175,6 @@ def headings_to_ast(ast: Node, tokens: Sequence[Token]):
 
                 stack[0].children.append(node)
                 stack.insert(0, node)
-    return ast
 
 
 def generate_toc_ast(ast: Node, state: StateCore) -> None:
