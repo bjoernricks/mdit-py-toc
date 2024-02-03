@@ -1,7 +1,7 @@
 import functools
 import re
 from dataclasses import dataclass, field
-from typing import Iterable, Sequence, Union
+from typing import Callable, Iterable, Optional, Sequence, Union
 
 from markdown_it import MarkdownIt
 from markdown_it.common.utils import escapeHtml
@@ -24,6 +24,21 @@ class Node:
         self.children = []
 
 
+SlugFunc = Callable[[str], str]
+
+
+def slugify(title: str) -> str:
+    """
+    Convert title text to id slug for link references
+
+    Args:
+        title: Text to convert into a slug
+    """
+    return re.sub(
+        r"[^\w\u4e00-\u9fff\- ]", "", title.strip().lower().replace(" ", "-")
+    )
+
+
 def get_levels(level: Union[str, int, Iterable[int]]) -> list[int]:
     if isinstance(level, str):
         return [int(level)]
@@ -40,9 +55,19 @@ def toc_plugin(
     pattern: str = r"^(\[TOC\])",
     level: Union[int, Iterable[int]] = (1, 2),
     list_type: str = "ul",
+    slug_func: Optional[SlugFunc] = slugify,
 ) -> None:
     """
+    A table of contents (TOC) plugin for markdown-it-py
+
     Plugin ported from https://github.com/nagaozen/markdown-it-toc-done-right
+
+    Args:
+        pattern: The pattern serving as the TOC placeholder in your markdown
+        level: Minimum level to apply anchors on or iterable of selected levels
+        list_type: Type of list (`"ul"` for unordered, `"ol"` for ordered)
+        slug_func: Function to convert heading title text to id slugs for link
+            references
     """
     ast = Node()
     levels: list[int] = get_levels(level)
@@ -60,7 +85,7 @@ def toc_plugin(
     )
 
     md.add_render_rule(
-        "toc_body", functools.partialmethod(render_toc_body, ast, levels, list_type)  # type: ignore
+        "toc_body", functools.partialmethod(render_toc_body, ast, levels, list_type, slug_func)  # type: ignore
     )
 
 
@@ -110,6 +135,7 @@ def render_toc_body(
     ast: Node,
     levels: list[int],
     list_type: str,
+    slug_func: SlugFunc,
     tokens: Sequence[Token],
     idx: int,
     options: OptionsDict,
@@ -128,7 +154,7 @@ def render_toc_body(
 
         for node in tree.children:
             if is_level_selected(levels, node.level):
-                slug = unique_slug(slugify(node.title), slugs)
+                slug = unique_slug(slug_func(node.title), slugs)
                 elements.append(
                     f'<li><a href="#{slug}">{node.title}</a>{ast_to_html(node)}</li>'
                 )
@@ -179,12 +205,6 @@ def headings_to_ast(ast: Node, tokens: Sequence[Token]) -> None:
 
 def generate_toc_ast(ast: Node, state: StateCore) -> None:
     headings_to_ast(ast, state.tokens)
-
-
-def slugify(title: str) -> str:
-    return re.sub(
-        r"[^\w\u4e00-\u9fff\- ]", "", title.strip().lower().replace(" ", "-")
-    )
 
 
 def unique_slug(slug: str, slugs: set[str]) -> str:

@@ -1,3 +1,3 @@
-from .plugin import toc_plugin
+from .plugin import slugify, toc_plugin
 
-__all__ = ("toc_plugin",)
+__all__ = ("toc_plugin", "slugify")
