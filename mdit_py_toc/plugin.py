@@ -39,7 +39,7 @@ def slugify(title: str) -> str:
     )
 
 
-def get_levels(level: Union[str, int, Iterable[int]]) -> list[int]:
+def _get_levels(level: Union[str, int, Iterable[int]]) -> list[int]:
     if isinstance(level, str):
         return [int(level)]
     if isinstance(level, int):
@@ -70,7 +70,7 @@ def toc_plugin(
             references
     """
     ast = Node()
-    levels: list[int] = get_levels(level)
+    levels: list[int] = _get_levels(level)
     compiled_pattern = re.compile(pattern, re.IGNORECASE)
     list_type = escapeHtml(list_type)
 
@@ -81,11 +81,11 @@ def toc_plugin(
         {"alt": ["paragraph", "reference", "blockquote"]},
     )
     md.core.ruler.push(
-        "generate_toc_ast", functools.partial(generate_toc_ast, ast)
+        "generate_toc_ast", functools.partial(_generate_toc_ast, ast)
     )
 
     md.add_render_rule(
-        "toc_body", functools.partialmethod(render_toc_body, ast, levels, list_type, slug_func)  # type: ignore
+        "toc_body", functools.partialmethod(_render_toc_body, ast, levels, list_type, slug_func)  # type: ignore
     )
 
 
@@ -126,11 +126,11 @@ def _toc(
     return True
 
 
-def is_level_selected(levels: list[int], level: int) -> bool:
+def _is_level_selected(levels: list[int], level: int) -> bool:
     return level in levels
 
 
-def render_toc_body(
+def _render_toc_body(
     self: RendererProtocol,
     ast: Node,
     levels: list[int],
@@ -149,19 +149,19 @@ def render_toc_body(
         if not tree.children:
             return ""
 
-        if tree.level == 0 or is_level_selected(levels, tree.level):
+        if tree.level == 0 or _is_level_selected(levels, tree.level):
             elements.append(f"<{list_type}>")
 
         for node in tree.children:
-            if is_level_selected(levels, node.level):
-                slug = unique_slug(slug_func(node.title), slugs)
+            if _is_level_selected(levels, node.level):
+                slug = _unique_slug(slug_func(node.title), slugs)
                 elements.append(
                     f'<li><a href="#{slug}">{node.title}</a>{ast_to_html(node)}</li>'
                 )
             else:
                 ast_to_html(node)
 
-        if tree.level == 0 or is_level_selected(levels, tree.level):
+        if tree.level == 0 or _is_level_selected(levels, tree.level):
             elements.append(f"</{list_type}>")
 
         return "\n".join(elements)
@@ -171,7 +171,7 @@ def render_toc_body(
     return content
 
 
-def generate_toc_ast(ast: Node, state: StateCore) -> None:
+def _generate_toc_ast(ast: Node, state: StateCore) -> None:
     stack = [ast]
     tokens = state.tokens
 
@@ -204,7 +204,7 @@ def generate_toc_ast(ast: Node, state: StateCore) -> None:
                 stack.insert(0, node)
 
 
-def unique_slug(slug: str, slugs: set[str]) -> str:
+def _unique_slug(slug: str, slugs: set[str]) -> str:
     uniq = slug
     i = 1
     while uniq in slugs:
