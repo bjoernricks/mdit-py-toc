@@ -30,7 +30,7 @@ jobs:
         with:
           github-user: ${{ secrets.USER_NAME }}
           github-user-mail: ${{ secrets.USER_MAIL }}
-          github-user-token: ${{ github.token }}
+          github-user-token: ${{ secrets.USER_TOKEN }}
           release-type: ${{ steps.release-type.outputs.release-type }}
           release-version: ${{ inputs.release-version }}
           ref: ${{ steps.release-type.outputs.release-ref }}
