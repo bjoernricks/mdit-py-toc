@@ -13,7 +13,7 @@ based on [markdown-it-toc-done-right](https://github.com/nagaozen/markdown-it-to
 
 ### Install using poetry
 
-Because **mdit-py-toc** is a plugin you most likely need a tool to
+Because **mdit-py-toc** is a plugin, you most likely need a tool to
 handle Python package dependencies and Python environments. Therefore we
 strongly recommend using [poetry].
 
@@ -48,11 +48,18 @@ python -m pip install mdit-py-toc
 
 ## Usage
 
+`mdit-py-toc` works best in conjunction with the [anchors plugin](https://mdit-py-plugins.readthedocs.io/en/latest/#heading-anchors).
+
 ```python
 from markdown_it import MarkdownIt
-from mdit_py_toc import toc_plugin
+from mdit_py_plugins.anchors import anchors_plugin
+from mdit_py_toc import toc_plugin, slugify
 
-md = MarkdownIt().use(toc_plugin, list_type="ol")
+md = (
+  MarkdownIt()
+  .use(anchors_plugin, permalink=True, slug_func=slugify)
+  .use(toc_plugin, list_type="ol")
+)
 markdown = """
 # A Page
 
