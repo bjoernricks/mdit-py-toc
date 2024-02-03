@@ -171,8 +171,9 @@ def render_toc_body(
     return content
 
 
-def headings_to_ast(ast: Node, tokens: Sequence[Token]) -> None:
+def generate_toc_ast(ast: Node, state: StateCore) -> None:
     stack = [ast]
+    tokens = state.tokens
 
     for i, token in enumerate(tokens):
         if token.type == "heading_open":
@@ -201,10 +202,6 @@ def headings_to_ast(ast: Node, tokens: Sequence[Token]) -> None:
 
                 stack[0].children.append(node)
                 stack.insert(0, node)
-
-
-def generate_toc_ast(ast: Node, state: StateCore) -> None:
-    headings_to_ast(ast, state.tokens)
 
 
 def unique_slug(slug: str, slugs: set[str]) -> str:
