@@ -1,0 +1,37 @@
+name: Release
+
+on:
+  workflow_call:
+    inputs:
+      release-type:
+        description: Kind of release
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+      release-version:
+        type: string
+        description: Set an explicit version, that will overwrite release-type. Fails if version is not compliant.
+
+
+jobs:
+  build-and-release:
+    name: Create a new release
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: Selecting the Release type
+        id: release-type
+        uses: greenbone/actions/release-type@v3
+        with:
+          release-type-input: ${{ inputs.release-type }}
+      - name: Release with release action
+        uses: greenbone/actions/release@v3
+        with:
+          github-user: ${{ secrets.USER_NAME }}
+          github-user-mail: ${{ secrets.USER_MAIL }}
+          github-user-token: ${{ github.token }}
+          release-type: ${{ steps.release-type.outputs.release-type }}
+          release-version: ${{ inputs.release-version }}
+          ref: ${{ steps.release-type.outputs.release-ref }}
+          versioning-scheme: "semver"
