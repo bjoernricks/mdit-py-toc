@@ -42,7 +42,7 @@ python -m pip install mdit-py-toc
 | Name      | Description                                                            | Default               |
 | --------- | ---------------------------------------------------------------------- | --------------------- |
 | pattern   | The pattern serving as the TOC placeholder in your markdown            | `r"^(\[TOC\]")`       |
-| level     | Minimum level to apply anchors on or iterable of selected levels       | `(1, 2)`              |
+| level     | Heading level to apply anchors on or iterable of selected levels       | `(1, 2)`              |
 | list_type | Type of list (`"ul"` for unordered, `"ol"` for ordered)                | `"ul"`                |
 | slug_func | Function to convert heading title text to id slugs for link references | `mdit_py_toc.slugify` |
 
