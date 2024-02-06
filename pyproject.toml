@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mdit-py-toc"
-version = "1.0.0.dev1"
+version = "1.0.0"
 description = "A table of contents (TOC) plugin for markdown-it-py"
 authors = ["Björn Ricks <bjoern.ricks@greenbone.net>"]
 license = "MIT"
