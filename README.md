@@ -67,9 +67,22 @@ markdown = """
 
 ## Section 1
 
-## Section 1
+## Section 2
 """
 html = md.render(markdown)
+```
+Creates the following HTML output
+```
+<h1 id="a-page">A Page <a class="header-anchor" href="#a-page">¶</a></h1>
+<nav>
+<ol>
+<li><a href="#a-page">A Page </a><ol>
+<li><a href="#section-1">Section 1 </a></li>
+<li><a href="#section-2">Section 2 </a></li>
+</ol></li>
+</ol></nav>
+<h2 id="section-1">Section 1 <a class="header-anchor" href="#section-1">¶</a></h2>
+<h2 id="section-2">Section 2 <a class="header-anchor" href="#section-2">¶</a></h2>
 ```
 
 [poetry]: https://python-poetry.org/
