@@ -524,13 +524,13 @@ test = ["appdirs (==1.4.4)", "covdefaults (>=2.3)", "pytest (>=7.4.3)", "pytest-
 
 [[package]]
 name = "pontos"
-version = "24.2.2"
+version = "24.3.0"
 description = "Common utilities and tools maintained by Greenbone Networks"
 optional = false
 python-versions = ">=3.9,<4.0"
 files = [
-    {file = "pontos-24.2.2-py3-none-any.whl", hash = "sha256:3e45e17c6627cc32c5fd9ccffb74abba5b324b5da80c564c250dd5386de4aaf0"},
-    {file = "pontos-24.2.2.tar.gz", hash = "sha256:2599ce6adb885cc6f92750d5972cdfa9c6b6eb5fa35485bb429927a60713c2d5"},
+    {file = "pontos-24.3.0-py3-none-any.whl", hash = "sha256:006511ee5eea4df21d91181a64bc6c659630c060e9a9a275d4c3c6042092b566"},
+    {file = "pontos-24.3.0.tar.gz", hash = "sha256:1566c4fba3b4c7e1618906539727079a6c693c08c22d3e39dae5599d956d17f4"},
 ]
 
 [package.dependencies]
@@ -541,7 +541,7 @@ packaging = ">=20.3"
 python-dateutil = ">=2.8.2"
 rich = ">=12.4.4"
 semver = ">=2.13"
-shtab = ">=1.6.5"
+shtab = ">=1.7.0"
 tomlkit = ">=0.5.11"
 
 [[package]]
@@ -630,13 +630,13 @@ files = [
 
 [[package]]
 name = "shtab"
-version = "1.6.5"
+version = "1.7.0"
 description = "Automagic shell tab completion for Python CLI applications"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "shtab-1.6.5-py3-none-any.whl", hash = "sha256:3c7be25ab65a324ed41e9c2964f2146236a5da6e6a247355cfea56f65050f220"},
-    {file = "shtab-1.6.5.tar.gz", hash = "sha256:cf4ab120183e84cce041abeb6f620f9560739741dfc31dd466315550c08be9ec"},
+    {file = "shtab-1.7.0-py3-none-any.whl", hash = "sha256:0824f6f965cf5b6466d8870289c15a8973518820231a84f4422a0b8377261375"},
+    {file = "shtab-1.7.0.tar.gz", hash = "sha256:6661c2835d0214e259ab74d09bdb9a863752e898bcf2e75ad8cf7ebd7c35bc7e"},
 ]
 
 [package.extras]
