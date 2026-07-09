@@ -15,12 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - name: Set up Python
-        uses: greenbone/actions/poetry@v3
+        uses: greenbone/actions/uv@v3
         with:
           python-version: "3.10"
-          install-dependencies: "false"
       - name: Build
         run: |
-          poetry build
+          uv build
       - name: Publish
         uses: pypa/gh-action-pypi-publish@release/v1

@@ -23,8 +23,9 @@ jobs:
         uses: greenbone/actions/lint-python@v3
         with:
           packages: mdit_py_toc tests
+          package-manager: uv
           python-version: ${{ matrix.python-version }}
-          linter: ruff
+          linter: ruff check --diff
 
   test:
     name: Run all tests
@@ -38,12 +39,12 @@ jobs:
           - "3.12"
     steps:
       - uses: actions/checkout@v6
-      - name: Install python, poetry and dependencies
-        uses: greenbone/actions/poetry@v3
+      - name: Install python and and uv
+        uses: greenbone/actions/uv@v3
         with:
           python-version: ${{ matrix.python-version }}
       - name: Run unit tests
-        run: poetry run python -m unittest -v
+        run: uv run python -m unittest -v
 
   mypy:
     name: Check type hints
@@ -57,18 +58,19 @@ jobs:
           - "3.12"
     steps:
       - uses: actions/checkout@v6
-      - name: Run mypy
-        uses: greenbone/actions/mypy-python@v3
+      - uses: greenbone/actions/uv@v3
         with:
           python-version: ${{ matrix.python-version }}
+      - name: Run mypy
+        run: uv run mypy mdit_py_toc tests
 
   check-version:
     name: Check versioning for consistency
     runs-on: "ubuntu-latest"
     steps:
       - uses: actions/checkout@v6
-      - name: Install python, poetry and dependencies
-        uses: greenbone/actions/poetry@v3
+      - name: Install python and uv
+        uses: greenbone/actions/uv@v3
       - name: Check version
         run: |
-          poetry run pontos-version verify current
+          uv run pontos-version verify current
