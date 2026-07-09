@@ -1,7 +1,8 @@
 import functools
 import re
+from collections.abc import Iterable, Sequence
 from dataclasses import dataclass, field
-from typing import Callable, Iterable, Optional, Sequence, Union
+from typing import Callable, Optional, Union
 
 from markdown_it import MarkdownIt
 from markdown_it.common.utils import escapeHtml
@@ -109,12 +110,12 @@ class TocPlugin:
     def _toc(
         self,
         state: StateBlock,
-        startLine: int,
-        endLine: int,
+        start_line: int,
+        end_line: int,
         silent: bool,
     ) -> bool:
-        pos = state.bMarks[startLine] + state.tShift[startLine]
-        max = state.eMarks[startLine]
+        pos = state.bMarks[start_line] + state.tShift[start_line]
+        max = state.eMarks[start_line]  # noqa: A001
 
         # use whitespace as a line tokenizer and extract the first token
         # to test against the placeholder anchored pattern, rejecting if false
@@ -126,15 +127,15 @@ class TocPlugin:
         if silent:
             return True
 
-        state.line = startLine + 1
+        state.line = start_line + 1
 
         token = state.push("toc_open", "nav", 1)
         token.markup = ""
-        token.map = [startLine, state.line]
+        token.map = [start_line, state.line]
 
         token = state.push("toc_body", "", 0)
         token.markup = ""
-        token.map = [startLine, state.line]
+        token.map = [start_line, state.line]
         token.children = []
 
         token = state.push("toc_close", "nav", -1)
