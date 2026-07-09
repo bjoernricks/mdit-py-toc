@@ -4,24 +4,24 @@ A table of contents (TOC) plugin for [markdown-it-py](https://markdown-it-py.rea
 based on [markdown-it-toc-done-right](https://github.com/nagaozen/markdown-it-toc-done-right).
 
 - [Installation](#installation)
-  - [Install using poetry](#install-using-poetry)
+  - [Install using poetry or uv](#install-using-poetry-or-uv)
   - [Install using pip](#install-using-pip)
 - [Options](#options)
 - [Usage](#usage)
 
 ## Installation
 
-### Install using poetry
+### Install using poetry or uv
 
 Because **mdit-py-toc** is a plugin, you most likely need a tool to
 handle Python package dependencies and Python environments. Therefore we
-strongly recommend using [poetry].
+recommend using [poetry] or [uv].
 
 You can install the latest stable release and add it as a dependency for your
-current project using [poetry]
+current project using [uv]
 
-```
-poetry add mdit-py-toc
+```sh
+uv add mdit-py-toc
 ```
 
 ### Install using pip
@@ -33,7 +33,7 @@ poetry add mdit-py-toc
 You can install the latest stable release from the Python Package Index (pypi)
 using [pip]
 
-```
+```sh
 python -m pip install mdit-py-toc
 ```
 
@@ -71,8 +71,10 @@ markdown = """
 """
 html = md.render(markdown)
 ```
+
 Creates the following HTML output
-```
+
+```html
 <h1 id="a-page">A Page <a class="header-anchor" href="#a-page">¶</a></h1>
 <nav>
 <ol>
@@ -87,3 +89,4 @@ Creates the following HTML output
 
 [poetry]: https://python-poetry.org/
 [pip]: https://pip.pypa.io/
+[uv]: https://docs.astral.sh/uv/
