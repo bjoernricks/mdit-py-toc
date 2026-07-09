@@ -18,7 +18,7 @@ jobs:
           - "3.11"
           - "3.12"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Lint with ruff
         uses: greenbone/actions/lint-python@v3
         with:
@@ -38,7 +38,7 @@ jobs:
           - "3.11"
           - "3.12"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Install python and and uv
         uses: greenbone/actions/uv@v3
         with:
@@ -57,7 +57,7 @@ jobs:
           - "3.11"
           - "3.12"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - uses: greenbone/actions/uv@v3
         with:
           python-version: ${{ matrix.python-version }}
@@ -68,7 +68,7 @@ jobs:
     name: Check versioning for consistency
     runs-on: "ubuntu-latest"
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
       - name: Install python and uv
         uses: greenbone/actions/uv@v3
       - name: Check version
