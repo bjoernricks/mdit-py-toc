@@ -1,14 +1,16 @@
-[tool.poetry]
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
 name = "mdit-py-toc"
 version = "1.0.1.dev1"
 description = "A table of contents (TOC) plugin for markdown-it-py"
-authors = ["Björn Ricks <bjoern.ricks@greenbone.net>"]
-license = "MIT"
+authors = [{ name = "Björn Ricks", email = "bjoern.ricks@greenbone.net" }]
+requires-python = ">=3.9,<4"
 readme = "README.md"
-homepage = "https://github.com/bjoernricks/mdit-py-toc"
-repository = "https://github.com/bjoernricks/mdit-py-toc/"
+license = "MIT"
 classifiers = [
-    # Full list: https://pypi.org/pypi?%3Aaction=list_classifiers
     "Development Status :: 4 - Beta",
     "License :: OSI Approved :: MIT License",
     "Environment :: Console",
@@ -20,21 +22,38 @@ classifiers = [
     "Operating System :: OS Independent",
     "Topic :: Software Development :: Libraries :: Python Modules",
     "Topic :: Text Processing :: Markup :: Markdown",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = ["markdown-it-py>=3.0.0"]
+
+[project.urls]
+Homepage = "https://github.com/bjoernricks/mdit-py-toc"
+Repository = "https://github.com/bjoernricks/mdit-py-toc/"
+
+[dependency-groups]
+dev = [
+    "autohooks-plugin-ruff>=24.1.0",
+    "autohooks-plugin-mypy>=23.10.0",
+    "autohooks-plugin-black>=23.10.0",
+    "pontos>=24.1.2",
 ]
 
-[tool.poetry.dependencies]
-python = "^3.9"
-markdown-it-py = ">=3.0.0"
+[tool.uv]
+default-groups = "all"
 
-[tool.poetry.group.dev.dependencies]
-autohooks-plugin-ruff = ">=24.1.0"
-autohooks-plugin-mypy = ">=23.10.0"
-autohooks-plugin-black = ">=23.10.0"
-pontos = ">=24.1.2"
+[tool.hatch.build.targets.wheel]
+packages = ["mdit_py_toc"]
+
+[tool.hatch.build.targets.sdist]
+include = ["tests", "mdit_py_toc", "uv.lock"]
 
 [tool.ruff]
 line-length = 80
 target-version = "py39"
+
+[tool.ruff.lint]
 extend-select = ["I", "PLE", "PLW"]
 
 [tool.mypy]
@@ -57,7 +76,3 @@ pre-commit = [
 
 [tool.pontos.version]
 version-module-file = "mdit_py_toc/__version__.py"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
