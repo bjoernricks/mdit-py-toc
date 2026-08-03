@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Lint with ruff
-        uses: greenbone/actions/lint-python@v3
+        uses: greenbone/actions/lint-python@v3.36.12
         with:
           packages: mdit_py_toc tests
           package-manager: uv
@@ -40,7 +40,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Install python and and uv
-        uses: greenbone/actions/uv@v3
+        uses: greenbone/actions/uv@v3.36.12
         with:
           python-version: ${{ matrix.python-version }}
       - name: Run unit tests
@@ -58,7 +58,7 @@ jobs:
           - "3.12"
     steps:
       - uses: actions/checkout@v7
-      - uses: greenbone/actions/uv@v3
+      - uses: greenbone/actions/uv@v3.36.12
         with:
           python-version: ${{ matrix.python-version }}
       - name: Run mypy
@@ -70,7 +70,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Install python and uv
-        uses: greenbone/actions/uv@v3
+        uses: greenbone/actions/uv@v3.36.12
       - name: Check version
         run: |
           uv run pontos-version verify current

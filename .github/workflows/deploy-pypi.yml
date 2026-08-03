@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - name: Set up Python
-        uses: greenbone/actions/uv@v3
+        uses: greenbone/actions/uv@v3.36.12
         with:
           python-version: "3.10"
       - name: Build
